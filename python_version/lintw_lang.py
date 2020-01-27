@@ -1,3 +1,9 @@
+'''
+English to Lintwian converter
+
+To use as a standalone script, uncomment the code lines
+at the end of the script and run in a Python 3.6 environment.
+'''
 import re
 
 from lintwDict import lintw_dictionary
@@ -10,15 +16,23 @@ db = ("あいうえおかがきぎくぐけげこごさざしじすずせぜそ"
 
 
 class LintwCharacter(object):
+    '''
+    A class for Lintwian character instances
+    '''
 
     def __init__(self, char, head, body, tail, latin):
+
         self.char = char
         self.is_head = head
         self.is_body = body
         self.is_tail = tail
         self.latin = latin
 
-
+'''
+A database for the Lintwese characters.
+One Lintwese character corresponds
+to one of the Japanese hieroglyphs
+'''
 lintwchars = {'あ': LintwCharacter('あ', 1, 1, 1, 'al'),
               'い': LintwCharacter('い', 1, 0, 0, 'iŵ'),
               'う': LintwCharacter('う', 1, 0, 0, 'uŵ'),
@@ -101,16 +115,19 @@ lintwchars = {'あ': LintwCharacter('あ', 1, 1, 1, 'al'),
               '7': LintwCharacter('7', None, None, None, 'sra')}
 
 '''
+Original dictionaries by nkymtky, left here for reference
+'''
+'''
 rule_db = {"あ" : [1,1,1], "い" : [1,0,0], "う" : [1,0,0], "え" : [1,1,1], "お" : [1,1,1],
-           "か" : [0,1,1], "が" : [0,1,1], "き" : [1,1,1], "ぎ" : [1,1,1], "く" : [1,1,1], 
+           "か" : [0,1,1], "が" : [0,1,1], "き" : [1,1,1], "ぎ" : [1,1,1], "く" : [1,1,1],
            "ぐ" : [0,1,1], "け" : [1,0,0], "げ" : [0,0,1], "こ" : [1,1,0], "ご" : [1,1,0],
-           "さ" : [1,1,0], "ざ" : [0,1,1], "し" : [0,1,1], "じ" : [1,1,1], "す" : [1,1,1], 
+           "さ" : [1,1,0], "ざ" : [0,1,1], "し" : [0,1,1], "じ" : [1,1,1], "す" : [1,1,1],
            "ず" : [0,1,0], "せ" : [1,1,1], "ぜ" : [1,1,0], "そ" : [1,1,1], "ぞ" : [0,0,1],
-           "た" : [1,1,1], "だ" : [1,1,1], "ち" : [0,1,1], "ぢ" : [0,1,1], "つ" : [1,1,1], 
+           "た" : [1,1,1], "だ" : [1,1,1], "ち" : [0,1,1], "ぢ" : [0,1,1], "つ" : [1,1,1],
            "づ" : [0,1,1], "て" : [1,1,1], "で" : [1,1,1], "と" : [0,0,1], "ど" : [0,1,1],
            "な" : [1,1,0], "に" : [0,0,1], "ぬ" : [0,1,1], "ね" : [1,1,0], "の" : [0,0,1],
-           "は" : [1,0,0], "ば" : [1,1,1], "ぱ" : [1,1,1], "ひ" : [1,1,0], "び" : [1,1,1], 
-           "ぴ" : [1,1,0], "ふ" : [1,1,1], "ぶ" : [1,1,0], "ぷ" : [0,0,1], "へ" : [1,0,0], 
+           "は" : [1,0,0], "ば" : [1,1,1], "ぱ" : [1,1,1], "ひ" : [1,1,0], "び" : [1,1,1],
+           "ぴ" : [1,1,0], "ふ" : [1,1,1], "ぶ" : [1,1,0], "ぷ" : [0,0,1], "へ" : [1,0,0],
            "べ" : [1,1,1], "ぺ" : [0,1,1], "ほ" : [1,1,1], "ぼ" : [1,1,1], "ぽ" : [1,1,1],
            "ま" : [1,1,1], "み" : [1,1,1], "む" : [0,1,1], "め" : [1,1,1], "も" : [1,1,1],
            "や" : [1,1,0], "ゆ" : [1,1,0], "よ" : [1,1,0],
@@ -120,15 +137,15 @@ rule_db = {"あ" : [1,1,1], "い" : [1,0,0], "う" : [1,0,0], "え" : [1,1,1], "
 }
 
 latin_db = {"あ" : "al"  , "い" : "iŵ"  , "う" : "uŵ"  , "え" : "el"  , "お" : "o:"  ,
-            "か" : "qua" , "が" : "gaŵ" , "き" : "ki:" , "ぎ" : "gil" , "く" : "kul" , 
+            "か" : "qua" , "が" : "gaŵ" , "き" : "ki:" , "ぎ" : "gil" , "く" : "kul" ,
             "ぐ" : "gue" , "け" : "kel" , "げ" : "gen" , "こ" : "kon" , "ご" : "goŵ" ,
-            "さ" : "san" , "ざ" : "za:" , "し" : "ŝio" , "じ" : "ĵos" , "す" : "sta" , 
+            "さ" : "san" , "ざ" : "za:" , "し" : "ŝio" , "じ" : "ĵos" , "す" : "sta" ,
             "ず" : "zwao", "せ" : "sel" , "ぜ" : "zei" , "そ" : "so:" , "ぞ" : "zoi" ,
-            "た" : "ta:" , "だ" : "da:" , "ち" : "ĉil" , "ぢ" : "diŵ" , "つ" : "cua" , 
+            "た" : "ta:" , "だ" : "da:" , "ち" : "ĉil" , "ぢ" : "diŵ" , "つ" : "cua" ,
             "づ" : "dia" , "て" : "ten" , "で" : "den" , "と" : "tŵ"  , "ど" : "din" ,
             "な" : "na:" , "に" : "nia" , "ぬ" : "nus" , "ね" : "ne:" , "の" : "noa" ,
-            "は" : "hal" , "ば" : "bal" , "ぱ" : "pan" , "ひ" : "hyea", "び" : "viŵ" , 
-            "ぴ" : "pi:" , "ふ" : "fiŵ" , "ぶ" : "vyu" , "ぷ" : "pia" , "へ" : "hel" , 
+            "は" : "hal" , "ば" : "bal" , "ぱ" : "pan" , "ひ" : "hyea", "び" : "viŵ" ,
+            "ぴ" : "pi:" , "ふ" : "fiŵ" , "ぶ" : "vyu" , "ぷ" : "pia" , "へ" : "hel" ,
             "べ" : "bel" , "ぺ" : "pen", "ほ" : "hoi" , "ぼ" : "boŵ" , "ぽ" : "pon" ,
             "ま" : "ma:" , "み" : "mieŵ", "む" : "mui" , "め" : "mel" , "も" : "mol" ,
             "や" : "jav" , "ゆ" : "jui" , "よ" : "jol" ,
@@ -145,6 +162,12 @@ VAL_DIV = 5035651
 
 
 def loop(v, mini, maxi):
+    '''
+    If v is not in the [mini, maxi] range,
+    it is looped back so that it's in the range and returned.
+    It is better shown what happens in this function on this graph:
+    https://www.desmos.com/calculator/ipfckj63ou
+    '''
     v -= mini
     r = maxi - mini
     v = v % r
@@ -152,6 +175,10 @@ def loop(v, mini, maxi):
 
 
 def hashc(c, i):
+    '''
+    Returns a hash for a character based on its Unicode code
+    and the hash of a previous character
+    '''
     i = abs(i)
     i += 1
     # val = ((i + c*187) * (i - c + 3443443))
@@ -161,6 +188,9 @@ def hashc(c, i):
 
 
 def init(string):
+    '''
+    Returns a hash for a string using the hashc() function
+    '''
     val = 0
     for c in string:
         c = ord(c)
@@ -170,6 +200,13 @@ def init(string):
 
 
 def getchar(index, head, body, tail):
+    '''
+    Returns a Lintwese character from the lintwchars dictionary
+    based on the given index, the position in the
+    original English word and whether the chosen
+    Lintwese character corresponds to the
+    required position in the word.
+    '''
     while True:
 
         index = loop(index, 0, DB_MAX_SIZE)
@@ -190,6 +227,19 @@ def getchar(index, head, body, tail):
 
 
 def convertword(seed):
+    '''
+    Converts an English word to Lintwese.
+    Returns a dictionary that contains the original
+    English word, the Lintwian translation and the
+    pronunciation
+
+    If the input string contains a number instead of
+    an English word, it is converted to octal.
+
+    If the English word is in the lintw_dictionary,
+    the corresponding pre-existing translation
+    is chosen from it instead.
+    '''
     seed = seed.lower().strip()
 
     ret = {"seed": seed, "lintwese": "", "latin": ""}
@@ -245,6 +295,14 @@ def convertword(seed):
 
 
 def convertsentence(seed_sentence):
+    '''
+    Returns a dictionary containing the convertword()
+    returns, hyphens and whitespaces.
+    Hyphens are omitted in Lintwese
+    because they don't exist in that language.
+    Whitespaces are replaced with a special Lintwese
+    character represented by Japanese '点'
+    '''
     ret = []
     seeds = re.split("\s*[- ]\s*", seed_sentence)
     # print(seeds)
@@ -277,6 +335,12 @@ def convertsentence(seed_sentence):
 
 
 def converttext(seedtext):
+    '''
+    Returns a dictionary containing the convertsentence()
+    returns and punctuation marks (!.).
+    In Lintwese (!)'s are represented by leading and trailing
+    symbols represented by (!)'s, similarly to Spanish.
+    '''
     ret = []
     seedtext = re.sub("\r\n", " ", seedtext)
     seedtext = re.sub("\n", " ", seedtext)
@@ -308,6 +372,7 @@ def converttext(seedtext):
         else:
             ret.append({"seed": ". ", "lintwese": "点", "latin": ". "})
 
+        # Legacy code, left in case of necessity
         # ret.pop()
         # if len(seedSentences) > 1:
         #    ret.append({"seed" : ".", "lintwese" : "点", "latin" : ". "})
@@ -315,7 +380,7 @@ def converttext(seedtext):
 
     return ret
 
-
+# Uncomment these for in-console use
 # print(convertword(str(input('Type in a word: '))))
 # print(converttext(str(input('Type in text:'))))
 # print('db: ' + str(len(db)))
