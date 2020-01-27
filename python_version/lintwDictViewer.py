@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+
 from .lintwDict import lintw_dictionary as lintw_dict
 from .lintw_lang import lintwchars
 

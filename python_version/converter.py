@@ -3,14 +3,14 @@ import PySimpleGUI as sg
 from . import lintw_lang
 
 
-def eng_to_lintw(word):
-    output = lintw_lang.converttext(str(word))
+def eng_to_lintw(english_word):
+    output = lintw_lang.converttext(str(english_word))
     lintwese = ""
     latin = ""
 
-    for x in output:
-        lintwese += x['lintwese']
-        latin += x['latin']
+    for word in output:
+        lintwese += word['lintwese']
+        latin += word['latin']
 
     window['lintwese'].update(lintwese)
     window['latin'].update(latin)
