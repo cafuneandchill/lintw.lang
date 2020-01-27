@@ -15,7 +15,7 @@ http://nkymtky.github.io/lintw.lang/converter.html
 
 ## How to use this converter
 
-NOTE: To use the Python version of the converter or the dictionary viewer, it is required to install one of the fonts located in the [font](./font/) directory to your computer. [LintwBasic 1.13](./font/LintwBasic/1.13/) or [1.20](./font/LintwBasic/1.20/) are recommended.
+NOTE: To use the Python version of the converter or the dictionary viewer, it is required to install one of the fonts located in the [font](./font/) directory to your computer. [LintwBasic 1.13](./font/LintwBasic/1.13/) or [1.20](./font/LintwBasic/1.20/) are recommended. Also, you will need PySimpleGUI module if you want to test the Python version.
 
 ### JavaScript
 
