@@ -1,12 +1,12 @@
-'''
+"""
 English to Lintwian converter
 
 To use as a standalone script, uncomment the code lines
 at the end of the script and run in a Python 3.6 environment.
-'''
+"""
 import re
 
-from lintwDict import lintw_dictionary
+from .lintwDict import lintw_dictionary
 
 DB_MAX_SIZE = 128
 
@@ -16,9 +16,9 @@ db = ("あいうえおかがきぎくぐけげこごさざしじすずせぜそ"
 
 
 class LintwCharacter(object):
-    '''
+    """
     A class for Lintwian character instances
-    '''
+    """
 
     def __init__(self, char, head, body, tail, latin):
 
@@ -28,11 +28,12 @@ class LintwCharacter(object):
         self.is_tail = tail
         self.latin = latin
 
-'''
+
+"""
 A database for the Lintwese characters.
 One Lintwese character corresponds
 to one of the Japanese hieroglyphs
-'''
+"""
 lintwchars = {'あ': LintwCharacter('あ', 1, 1, 1, 'al'),
               'い': LintwCharacter('い', 1, 0, 0, 'iŵ'),
               'う': LintwCharacter('う', 1, 0, 0, 'uŵ'),
@@ -162,12 +163,12 @@ VAL_DIV = 5035651
 
 
 def loop(v, mini, maxi):
-    '''
+    """
     If v is not in the [mini, maxi] range,
     it is looped back so that it's in the range and returned.
     It is better shown what happens in this function on this graph:
     https://www.desmos.com/calculator/ipfckj63ou
-    '''
+    """
     v -= mini
     r = maxi - mini
     v = v % r
@@ -175,10 +176,10 @@ def loop(v, mini, maxi):
 
 
 def hashc(c, i):
-    '''
+    """
     Returns a hash for a character based on its Unicode code
     and the hash of a previous character
-    '''
+    """
     i = abs(i)
     i += 1
     # val = ((i + c*187) * (i - c + 3443443))
@@ -188,9 +189,9 @@ def hashc(c, i):
 
 
 def init(string):
-    '''
+    """
     Returns a hash for a string using the hashc() function
-    '''
+    """
     val = 0
     for c in string:
         c = ord(c)
@@ -200,13 +201,13 @@ def init(string):
 
 
 def getchar(index, head, body, tail):
-    '''
+    """
     Returns a Lintwese character from the lintwchars dictionary
     based on the given index, the position in the
     original English word and whether the chosen
     Lintwese character corresponds to the
     required position in the word.
-    '''
+    """
     while True:
 
         index = loop(index, 0, DB_MAX_SIZE)
@@ -227,7 +228,7 @@ def getchar(index, head, body, tail):
 
 
 def convertword(seed):
-    '''
+    """
     Converts an English word to Lintwese.
     Returns a dictionary that contains the original
     English word, the Lintwian translation and the
@@ -239,7 +240,7 @@ def convertword(seed):
     If the English word is in the lintw_dictionary,
     the corresponding pre-existing translation
     is chosen from it instead.
-    '''
+    """
     seed = seed.lower().strip()
 
     ret = {"seed": seed, "lintwese": "", "latin": ""}
@@ -295,14 +296,14 @@ def convertword(seed):
 
 
 def convertsentence(seed_sentence):
-    '''
+    """
     Returns a dictionary containing the convertword()
     returns, hyphens and whitespaces.
     Hyphens are omitted in Lintwese
     because they don't exist in that language.
     Whitespaces are replaced with a special Lintwese
     character represented by Japanese '点'
-    '''
+    """
     ret = []
     seeds = re.split("\s*[- ]\s*", seed_sentence)
     # print(seeds)
@@ -335,15 +336,16 @@ def convertsentence(seed_sentence):
 
 
 def converttext(seedtext):
-    '''
+    """
     Returns a dictionary containing the convertsentence()
     returns and punctuation marks (!.).
     In Lintwese (!)'s are represented by leading and trailing
     symbols represented by (!)'s, similarly to Spanish.
-    '''
+    """
     ret = []
     seedtext = re.sub("\r\n", " ", seedtext)
     seedtext = re.sub("\n", " ", seedtext)
+    seedtext = re.sub("[^\w!.\-/ ]+|_+", "", seedtext)
     seedsentences = re.split("\s*[!.]\s*", seedtext) or []
     splitchars = re.findall("[!.]", seedtext) or []
     splitchars.append(".")
