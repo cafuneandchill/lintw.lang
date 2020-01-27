@@ -3,7 +3,7 @@
 
 English-Lintwese converter and Lintwese Fonts.
 
-Included are the two variants of the converter: the original JavaScript one, written by [nkymtky](https://github.com/nkymtky), and the Python one, that is adapted from the JavaScript version and partially modified by [cafuneandchill](https://github.com/cafuneandchill). The Python version also contains the Lintwian dictionary viewer (WIP), and PySimpleGUI interfaces for the converter and the dictionary viewer, all of which were written *de novo* by [cafuneandchill](https://github.com/cafuneandchill).
+Included are the two variants of the converter: the original JavaScript one, written by [nkymtky](https://github.com/nkymtky), and the Python 3.6 one, that is adapted from the JavaScript version and partially modified by [cafuneandchill](https://github.com/cafuneandchill). The Python 3.6 version also contains the Lintwian dictionary viewer (WIP), and PySimpleGUI interfaces for the converter and the dictionary viewer, all of which were written *de novo* by [cafuneandchill](https://github.com/cafuneandchill).
 
 # What is Lintw
 
@@ -30,7 +30,7 @@ console.log(word.lintwese + " [" +word.latin + "]");
 
 ### Python
 
-Run [converter.py](./python_version/converter.py) in a Python environment (executables or shell scripts are not implemented yet).
+Run [converter.py](./python_version/converter.py) in a Python 3.6 environment (executables or shell scripts are not implemented yet).
 
 # Lintwian Dictionary Viewer
 
