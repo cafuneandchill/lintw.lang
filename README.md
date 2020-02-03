@@ -3,7 +3,7 @@
 
 English-Lintwese converter and Lintwese Fonts.
 
-Included are the two variants of the converter: the original JavaScript one, written by [nkymtky](https://github.com/nkymtky), and the Python 3.6 one, that is adapted from the JavaScript version and partially modified by [cafuneandchill](https://github.com/cafuneandchill). The Python 3.6 version also contains the Lintwian dictionary viewer (WIP), and PySimpleGUI interfaces for the converter and the dictionary viewer, all of which were written *de novo* by [cafuneandchill](https://github.com/cafuneandchill).
+Included are the two variants of the converter: the original webpage-based JavaScript one, written by [nkymtky](https://github.com/nkymtky), and the Python 3.6 one, that is adapted from the JavaScript version and partially modified by [cafuneandchill](https://github.com/cafuneandchill). The Python 3.6 version also contains the Lintwian dictionary viewer (WIP), and PySimpleGUI interfaces for the converter and the dictionary viewer, all of which were written *de novo* by [cafuneandchill](https://github.com/cafuneandchill).
 
 ### Python version of the converter
 
@@ -31,6 +31,7 @@ NOTE: To use the Python version of the converter or the dictionary viewer, it is
 var word = lintw.lang.getWord("water");
 console.log(word.lintwese + " [" +word.latin + "]");
 ```
+It is also possible to use it by just running `converter.html` in a browser that supports JavaScript.
 
 ### Python
 
