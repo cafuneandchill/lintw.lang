@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 
-from . import lintw_lang
+import lintw_lang
 
 
 def eng_to_lintw(english_word):

@@ -5,8 +5,7 @@ To use as a standalone script, uncomment the code lines
 at the end of the script and run in a Python 3.6 environment.
 """
 import re
-
-from .lintwDict import lintw_dictionary
+import csv
 
 DB_MAX_SIZE = 128
 
@@ -227,6 +226,19 @@ def getchar(index, head, body, tail):
             return lintw_char
 
 
+def tolatin(lintwese):
+    """
+    Returns a string containing the pronunciation
+    of a Lintwese word
+    """
+    latin = ""
+    for c in lintwese:
+        lat = lintwchars[c].latin
+        if lat is not None:
+            latin += lat
+    return latin
+
+
 def convertword(seed):
     """
     Converts an English word to Lintwese.
@@ -253,7 +265,14 @@ def convertword(seed):
 
     elif re.search("^['/a-z]+$", seed) is not None:
 
-        dictword = lintw_dictionary.get(seed)
+        dictword = None
+
+        with open('lintwDict.csv', newline='') as csvdict:
+            dictionary_reader = csv.DictReader(csvdict, fieldnames=["latin", "lintwese", "lexical_category"])
+            for row in dictionary_reader:
+                if row["latin"] == seed:
+                    dictword = row["lintwese"]
+                    break
 
         if dictword is not None:
             ret["lintwese"] = dictword
@@ -287,10 +306,7 @@ def convertword(seed):
     else:
         ret["lintwese"] = seed
 
-    for c in ret["lintwese"]:
-        latin = lintwchars[c].latin
-        if latin is not None:
-            ret["latin"] += latin
+    ret["latin"] = tolatin(ret["lintwese"])
 
     return ret
 

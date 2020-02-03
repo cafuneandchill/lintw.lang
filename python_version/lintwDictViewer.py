@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 
-from .lintwDict import lintw_dictionary as lintw_dict
-from .lintw_lang import lintwchars
+from lintwDict import lintw_dictionary as lintw_dict
+from lintw_lang import tolatin
 
 
 def findtrans(original, translated):
@@ -14,11 +14,7 @@ def findtrans(original, translated):
 
 
 def printlatin(lintwese):
-    ret = ''
-    for c in lintwese:
-        latin = lintwchars[c].latin
-        if latin is not None:
-            ret += latin
+    ret = tolatin(lintwese)
     window['latin'].update('\\ ' + ret + ' \\')
     return None
 
