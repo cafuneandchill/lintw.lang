@@ -233,7 +233,11 @@ def tolatin(lintwese):
     """
     latin = ""
     for c in lintwese:
-        lat = lintwchars[c].latin
+        lat = None
+        try:
+            lat = lintwchars[c].latin
+        except KeyError:
+            print("No pronunciation for \"{}\" in Lintwese".format(c))
         if lat is not None:
             latin += lat
     return latin
